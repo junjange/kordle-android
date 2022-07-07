@@ -1,19 +1,25 @@
 package com.junjange.kordle.ui.viewmodel
 
 import android.app.Application
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.AndroidViewModel
+import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.junjange.kordle.room.KordleRepository
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel(private val repository: KordleRepository) : ViewModel() {
 
     private val _keyboardText = MutableLiveData<String>()
+    private  val _flag = MutableLiveData<Boolean>(false)
+
 
     val keyboardText : MutableLiveData<String>
     get() = _keyboardText
+
+    val flag : MutableLiveData<Boolean>
+        get() = _flag
 
     private val keyboard = hashMapOf(
         "q_button" to "ㅂ", "w_button" to "ㅈ", "e_button" to "ㄷ", "r_button" to "ㄱ", "t_button" to "ㅅ", "y_button" to "ㅛ", "u_button" to "ㅕ", "i_button" to "ㅑ",
@@ -25,6 +31,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         _keyboardText.value = keyboard[view.resources.getResourceEntryName(view.id)]
 
+    }
+    class Factory(private val application : Application) : ViewModelProvider.Factory { // factory pattern
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return MainViewModel(KordleRepository.getInstance(application)!!) as T
+        }
 
     }
 }

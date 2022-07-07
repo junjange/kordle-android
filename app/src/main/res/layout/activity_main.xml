@@ -47,16 +47,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="5dp"
-
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/box0"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -69,7 +71,7 @@
 
                 <TextView
                     android:id="@+id/box0_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="@color/black"
@@ -84,10 +86,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/box1"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -115,10 +119,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/box2"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -146,10 +152,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/box3"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -177,10 +185,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/box4"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -208,10 +218,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/box5"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -242,15 +254,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="5dp"
 
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box6"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -277,10 +293,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box7"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -308,10 +327,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box8"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -339,10 +361,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box9"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -370,10 +395,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box10"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -402,10 +430,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box11"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -437,15 +468,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="5dp"
-
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box12"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -472,10 +506,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box13"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -502,10 +539,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box14"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -531,10 +571,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box15"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -561,10 +604,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box16"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -591,10 +637,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box17"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -625,15 +674,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="5dp"
 
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box18"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -660,10 +713,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box19"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -690,10 +746,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box20"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -720,10 +779,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box21"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -750,10 +812,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box22"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -780,10 +845,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box23"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -814,15 +882,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="5dp"
-
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box24"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -849,10 +920,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box25"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -879,10 +953,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box26"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -909,10 +986,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box27"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -939,10 +1019,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box28"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -969,10 +1052,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box29"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -1003,15 +1089,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="5dp"
 
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box30"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -1038,10 +1128,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box31"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -1068,10 +1161,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box32"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -1098,10 +1194,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box33"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -1128,10 +1227,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box34"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -1158,10 +1260,13 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/box35"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -1201,6 +1306,8 @@
             android:layout_width="30dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:backgroundTint="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
@@ -1482,19 +1589,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="5dp"
+        android:orientation="horizontal"
 
         >
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/a_button"
             android:layout_width="30dp"
-            android:onClick="@{viewModel::keyboardOnClick}"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:backgroundTint="@color/normal"
             android:clipToPadding="true"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1504,14 +1613,13 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅁ"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -1523,10 +1631,10 @@
             android:id="@+id/s_button"
             android:layout_width="30dp"
             android:layout_height="50dp"
-            android:onClick="@{viewModel::keyboardOnClick}"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/normal"
             android:clipToPadding="true"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1556,8 +1664,8 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/normal"
-            android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1567,14 +1675,13 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅇ"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -1588,8 +1695,8 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/normal"
-            android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1599,14 +1706,13 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㄹ"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -1620,8 +1726,8 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/normal"
-            android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1631,14 +1737,13 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅎ"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -1652,8 +1757,8 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/normal"
-            android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1663,14 +1768,13 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅗ"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -1684,8 +1788,8 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/normal"
-            android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1695,14 +1799,13 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅓ"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -1716,8 +1819,8 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/normal"
-            android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1727,14 +1830,13 @@
                 android:orientation="vertical">
 
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅏ"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -1748,8 +1850,8 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/normal"
-            android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1781,7 +1883,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="5dp"
 
 
         >
@@ -1792,6 +1893,8 @@
             android:layout_width="30dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:backgroundTint="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
@@ -2043,6 +2146,39 @@
 
 
     </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/question"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/questionBox"
+        android:clipToPadding="true"
+        app:cardCornerRadius="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="이 놀이는?"
+                android:textColor="@color/question"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
 
 
 
