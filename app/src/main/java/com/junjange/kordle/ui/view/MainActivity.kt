@@ -4,7 +4,13 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.junjange.kordle.R
@@ -19,6 +25,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        setSupportActionBar(binding.mainToolbar) // 툴바를 액티비티의 앱바로 지정
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 드로어를 꺼낼 홈 버튼 활성화
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24) // 홈버튼 이미지 변경
+        supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바에 타이틀 안보이게
+
+
+
 
         // 정답 문자 리스트
         val currectText = arrayListOf("\u3147", "\u3163","\u3142", "\u3145", "\u315c","\u3139")
@@ -123,6 +137,7 @@ class MainActivity : AppCompatActivity() {
 
 
             }else{
+
                 var answer = 0
 
                 // 반복문을 통해 정답 코드를 확인
@@ -158,9 +173,9 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
+
                 if(answer == 6){
-                    Log.d("ttt", answer.toString())
-                    Toast.makeText(this@MainActivity, "정답입니다!", Toast.LENGTH_SHORT)
+                     Toast.makeText(this@MainActivity, "정답입니다!", Toast.LENGTH_SHORT).show()
                     viewModel.flag.value = true
 
                 }else{
@@ -186,6 +201,43 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
+
+    }
+
+
+    private fun setObserver() {
+        viewModel.roomKordle.observe(this, {
+        })
+
+
+    }
+
+    // appbar navi menu button
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home->{ // 메뉴 버튼
+                val layoutInflater = LayoutInflater.from(this)
+                val view = layoutInflater.inflate(R.layout.alert_dialog, null)
+
+                val alertDialog = AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                    .setView(view)
+                    .create()
+
+                val textTitle = view.findViewById<TextView>(R.id.confirmTextView)
+                val buttonConfirm =  view.findViewById<TextView>(R.id.yesButton)
+                val buttonClose =  view.findViewById<View>(R.id.noButton)
+
+                textTitle.text = "로그인 해볼까요?"
+                buttonConfirm.text = "로그인 하기"
+                buttonClose.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+                alertDialog.show()
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

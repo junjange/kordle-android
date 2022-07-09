@@ -3,13 +3,15 @@ package com.junjange.kordle.ui.viewmodel
 import android.app.Application
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import com.junjange.kordle.room.KordleEntity
 import com.junjange.kordle.room.KordleRepository
+import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: KordleRepository) : ViewModel() {
+
+    val roomKordle: LiveData<List<KordleEntity>> = repository.roomGetAllKordle()
+    val roomKordleInput: MutableLiveData<String> = MutableLiveData()
 
     private val _keyboardText = MutableLiveData<String>()
     private  val _flag = MutableLiveData<Boolean>(false)
@@ -21,6 +23,12 @@ class MainViewModel(private val repository: KordleRepository) : ViewModel() {
     val flag : MutableLiveData<Boolean>
         get() = _flag
 
+    // 코루틴으로 Room 제어
+//    fun insertRoom() = viewModelScope.launch {
+//        repository.roomInsertKordle(KordleEntity(0, "", ""))
+//        roomKordleInput.value = ""
+//    }
+
     private val keyboard = hashMapOf(
         "q_button" to "ㅂ", "w_button" to "ㅈ", "e_button" to "ㄷ", "r_button" to "ㄱ", "t_button" to "ㅅ", "y_button" to "ㅛ", "u_button" to "ㅕ", "i_button" to "ㅑ",
         "a_button" to "ㅁ", "s_button" to "ㄴ", "d_button" to "ㅇ", "f_button" to "ㄹ", "g_button" to "ㅎ", "h_button" to "ㅗ", "j_button" to "ㅓ", "k_button" to "ㅏ", "l_button" to "ㅣ",
@@ -30,6 +38,10 @@ class MainViewModel(private val repository: KordleRepository) : ViewModel() {
     fun keyboardOnClick(view: View){
 
         _keyboardText.value = keyboard[view.resources.getResourceEntryName(view.id)]
+
+//        viewModelScope.launch {
+//            repository.roomInsertKordle(KordleEntity(0, _keyboardText.value.toString(), ""))
+//        }
 
     }
     class Factory(private val application : Application) : ViewModelProvider.Factory { // factory pattern

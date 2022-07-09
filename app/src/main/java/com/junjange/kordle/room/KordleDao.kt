@@ -10,8 +10,8 @@ interface KordleDao {
     fun getAll(): LiveData<List<KordleEntity>>
 
     // 데이터 추가
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(kordleEntity: KordleEntity)
+//    @Insert(onConflict = OnConflictStrategy.IGNORE)
+//   suspend fun insert(kordleEntity: KordleEntity)
 
     // 데이터 전체 삭제
     @Query("DELETE FROM Kordle")
