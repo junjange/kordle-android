@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: KordleRepository) : ViewModel() {
 
-    val roomKordle: LiveData<List<KordleEntity>> = repository.roomGetAllKordle()
-    val roomKordleInput: MutableLiveData<String> = MutableLiveData()
+//    val roomKordle: LiveData<List<KordleEntity>> = repository.roomGetAllKordle()
+//    val roomKordleInput: MutableLiveData<String> = MutableLiveData()
 
     private val _keyboardText = MutableLiveData<String>()
     private  val _flag = MutableLiveData<Boolean>(false)
@@ -39,9 +39,6 @@ class MainViewModel(private val repository: KordleRepository) : ViewModel() {
 
         _keyboardText.value = keyboard[view.resources.getResourceEntryName(view.id)]
 
-//        viewModelScope.launch {
-//            repository.roomInsertKordle(KordleEntity(0, _keyboardText.value.toString(), ""))
-//        }
 
     }
     class Factory(private val application : Application) : ViewModelProvider.Factory { // factory pattern

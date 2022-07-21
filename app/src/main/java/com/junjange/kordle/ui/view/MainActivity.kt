@@ -1,5 +1,5 @@
 package com.junjange.kordle.ui.view
-
+import kotlin.random.Random
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +16,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.junjange.kordle.R
 import com.junjange.kordle.databinding.ActivityMainBinding
 import com.junjange.kordle.ui.viewmodel.MainViewModel
+import java.io.File
+import java.io.FileReader
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -31,27 +33,12 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24) // 홈버튼 이미지 변경
         supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바에 타이틀 안보이게
 
+        var kordelWords =  readTextFile()
+        var currectText = getWord(kordelWords)
+        Log.d("ttt가져온 유니코드 확인", kordelWords.toString())
+        Log.d("ttt정답 유니코드 확인", currectText.toString())
 
-
-
-        // 정답 문자 리스트
-        val currectText = arrayListOf("\u3147", "\u3163","\u3142", "\u3145", "\u315c","\u3139")
-        var target2 = arrayListOf<String>("ㅂ","ㅈ","ㅕ",
-            "ㅓ",
-            "ㅡ","ㅑ",
-            "ㅏ","ㅣ",
-            "ㄴ",
-            "ㅌ","ㄷ","ㅛ",
-            "ㅗ",
-            "ㅜ",
-            "ㅇ",
-            "ㅊ","ㄱ",
-            "ㄹ",
-            "ㅍ","ㅅ",
-            "ㅎ",
-            "ㅠ",
-            "ㅁ",
-            "ㅋ")
+        Log.d("Ttt", currectText.joinToString(""))
 
         // 키보드 박스
         val box = arrayOf(arrayOf(binding.box0,  binding.box1,  binding.box2,  binding.box3,  binding.box4,  binding.box5),
@@ -74,6 +61,9 @@ class MainActivity : AppCompatActivity() {
         var currentLine : Int = 0 // 현재 라인
         var currentBox : Int = 0 // 현재 박스 위치
 
+
+        var checkLine = Array(6){ i -> ""}
+
         /**
          * 키보드를 누르면 수행되는 코드
          * viewModel에 keyboardText를 observe하여 boxText에 문자를 입력
@@ -92,13 +82,25 @@ class MainActivity : AppCompatActivity() {
 
                             box[currentLine][currentBox].scaleX = 1f
                             box[currentLine][currentBox].scaleY = 1f
+                            checkLine[currentBox] = stringToConvertUnicode(it)
                             currentBox++
                         }.start()
+
+                        if (currentBox == 5){
+                            if (!kordelWords.contains(checkLine.joinToString(""))){
+                                Toast.makeText(this@MainActivity,"아, 목록에 단어가 없네요.", Toast.LENGTH_SHORT).show()
+
+                            }
+
+                        }
 
 
 
                     }else{
-                        Toast.makeText(this@MainActivity,"6개의 자음과 모음으로 단어를 확인하세요!", Toast.LENGTH_SHORT).show()
+                        if (!kordelWords.contains(checkLine.joinToString(""))){
+                            Toast.makeText(this@MainActivity,"아, 목록에 단어가 없네요.", Toast.LENGTH_SHORT).show()
+
+                        }
                     }
 
                 }
@@ -113,11 +115,15 @@ class MainActivity : AppCompatActivity() {
          * currentLine에 따라 boxText의 currentBox가 ""로 초기화 됨.
          *
          * */
+
         binding.deleteButton.setOnClickListener{
+
+
 
             if(currentBox in 1..6){
                 boxText[currentLine][currentBox-1].text = ""
                 box[currentLine][currentBox-1].strokeColor = Color.parseColor("#e2e8f0")
+                checkLine[currentBox-1] = ""
                 currentBox--
 
 
@@ -137,54 +143,61 @@ class MainActivity : AppCompatActivity() {
 
 
             }else{
+                if (!kordelWords.contains(checkLine.joinToString(""))){
+                    Toast.makeText(this@MainActivity,"아, 목록에 단어가 없네요.", Toast.LENGTH_SHORT).show()
 
-                var answer = 0
+                }else{
+                    var answer = 0
 
-                // 반복문을 통해 정답 코드를 확인
-                for (i in currectText.indices){
+                    // 반복문을 통해 정답 코드를 확인
+                    for (i in currectText.indices){
+                        Log.d("Ttt333", checkLine[i])
 
-                    // 정답 문자 리스트에 boxText[currentLine][i].text가 있다면
-                    if (currectText.contains( boxText[currentLine][i].text)){
-                        // 정답 문자와 boxText[currentLine][i].text가 같다면 박스에 초록 색상을 입힘
-                        if(currectText[i] == boxText[currentLine][i].text.toString()){
-                            box[currentLine][i].setCardBackgroundColor(Color.parseColor("#22c55e"))
-                            box[currentLine][i].strokeColor = Color.parseColor("#22c55e")
-                            answer++
+                        // 정답 문자 리스트에 boxText[currentLine][i].text가 있다면
+                        if (currectText.contains(checkLine[i])){
+                            // 정답 문자와 boxText[currentLine][i].text가 같다면 박스에 초록 색상을 입힘
+                            if(currectText[i] == checkLine[i]){
+                                box[currentLine][i].setCardBackgroundColor(Color.parseColor("#22c55e"))
+                                box[currentLine][i].strokeColor = Color.parseColor("#22c55e")
+                                answer++
 
 
 
-                            // 정답 문자와 boxText[currentLine][i].text가 다르다면 박스에 노란 색상을 입힘
+                                // 정답 문자와 boxText[currentLine][i].text가 다르다면 박스에 노란 색상을 입힘
+                            }else{
+                                box[currentLine][i].setCardBackgroundColor(Color.parseColor("#eab308"))
+                                box[currentLine][i].strokeColor = Color.parseColor("#eab308")
+
+
+                            }
+
+                            // 정답 코드에 boxText[currentLine][i].text가 없기 때문에 박스에 회색 색상을 입힘
                         }else{
-                            box[currentLine][i].setCardBackgroundColor(Color.parseColor("#eab308"))
-                            box[currentLine][i].strokeColor = Color.parseColor("#eab308")
+                            box[currentLine][i].setCardBackgroundColor(Color.parseColor("#94a3b8"))
+                            box[currentLine][i].strokeColor = Color.parseColor("#94a3b8")
+
 
 
                         }
-
-                    // 정답 코드에 boxText[currentLine][i].text가 없기 때문에 박스에 회색 색상을 입힘
-                    }else{
-                        box[currentLine][i].setCardBackgroundColor(Color.parseColor("#94a3b8"))
-                        box[currentLine][i].strokeColor = Color.parseColor("#94a3b8")
-
-
+                        boxText[currentLine][i].setTextColor(Color.WHITE)
 
                     }
-                    boxText[currentLine][i].setTextColor(Color.WHITE)
+
+
+                    if(answer == 6){
+                        Toast.makeText(this@MainActivity, "정답입니다!", Toast.LENGTH_SHORT).show()
+                        viewModel.flag.value = true
+
+                    }else{
+
+                        line[currentLine] = true // 현재 라인 해결
+                        currentLine++ // 다음 라인으로 초기화
+                        currentBox = 0 // 현재 박스 위치 초기화
+                    }
 
                 }
 
 
-                if(answer == 6){
-                     Toast.makeText(this@MainActivity, "정답입니다!", Toast.LENGTH_SHORT).show()
-                    viewModel.flag.value = true
-
-                }else{
-
-                    line[currentLine] = true // 현재 라인 해결
-                    currentLine++ // 다음 라인으로 초기화
-                    currentBox = 0 // 현재 박스 위치 초기화
-
-                }
 
 
 
@@ -205,13 +218,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    private fun setObserver() {
-        viewModel.roomKordle.observe(this, {
-        })
-
-
-    }
 
     // appbar navi menu button
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -241,8 +247,44 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    // kordle_unicode_words에서 하나의 단어를 가져온다.
+    private fun readTextFile(): List<String> {
+        val file = resources.openRawResource(R.raw.kordle_unicode_words)
+        var txt = ByteArray(file.available())
+        file.read(txt)
+        file.close()
+        var words = txt.toString(Charsets.UTF_8)
+        Toast.makeText(this, txt.toString(Charsets.UTF_8),Toast.LENGTH_SHORT).show()
+        words = words.replace("\"", "")
+
+        var word= words.split(",")
 
 
+    return  word
+    }
+
+    private fun getWord(word : List<String>): ArrayList<String> {
+        var temp = ""
+        var tempText = arrayListOf<String>()
+        while (tempText.size != 6){
+            tempText = arrayListOf<String>()
+            var wordRandom = word.shuffled()[0]
+            wordRandom.forEach { it ->
+                if(temp.length == 6){
+                    tempText.add(temp)
+                    temp =  it.toString()
+                }else{
+                    temp += it
+
+                }
+            }
+            tempText.add(temp)
+
+
+        }
+        return tempText
+
+    }
 
     /**
      * 아직 사용하지는 않지만
@@ -273,12 +315,15 @@ class MainActivity : AppCompatActivity() {
 
         for (b in arr) {
             val st = String.format("%02X", b)
-            text += st
+            text += st.toLowerCase()
         }
         text = "\\u" + text.substring(4 until 8)
 
         return text
     }
+
+
+
 
 
 }

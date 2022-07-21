@@ -20,7 +20,7 @@ abstract class KordleDatabase : RoomDatabase(){
         fun getInstance(application : Application): KordleDatabase? { // singleton pattern
             if (instance == null) {
                 synchronized(this){
-                    instance = Room.databaseBuilder(application, KordleDatabase::class.java, DB_NAME).build()
+                    instance = Room.databaseBuilder(application, KordleDatabase::class.java, DB_NAME).fallbackToDestructiveMigration().build()
                 }
             }
             return instance
