@@ -12,8 +12,6 @@
     </data>
 
 
-
-
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -44,6 +42,7 @@
 
 
     <LinearLayout
+        android:id="@+id/line0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -250,7 +249,7 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/aa"
+        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -465,6 +464,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -671,6 +671,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/line3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -879,6 +880,8 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/line4"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -1086,6 +1089,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/line5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -1094,16 +1098,16 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/box30"
-            app:cardBackgroundColor="@color/white"
-            app:strokeColor="@color/normal"
-            app:strokeWidth="1dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:clipToPadding="true"
-            app:cardCornerRadius="8dp">
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:strokeColor="@color/normal"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -1303,15 +1307,15 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/q_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:backgroundTint="@color/normal"
-            android:onClick="@{viewModel::keyboardOnClick}"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:elevation="5dp"
+            android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -1322,6 +1326,7 @@
 
 
                 <TextView
+                    android:id="@+id/q_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅂ"
@@ -1337,10 +1342,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/w_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:text="ㅈ"
             android:onClick="@{viewModel::keyboardOnClick}"
@@ -1355,6 +1360,7 @@
 
 
                 <TextView
+                    android:id="@+id/w_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅈ"
@@ -1370,10 +1376,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/e_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -1386,6 +1392,7 @@
 
 
                 <TextView
+                    android:id="@+id/e_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㄷ"
@@ -1401,10 +1408,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/r_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -1417,6 +1424,8 @@
 
 
                 <TextView
+                    android:id="@+id/r_text"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㄱ"
@@ -1432,7 +1441,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/t_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="@color/normal"
@@ -1448,6 +1457,8 @@
 
 
                 <TextView
+                    android:id="@+id/t_text"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅅ"
@@ -1463,10 +1474,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/y_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -1479,6 +1490,8 @@
 
 
                 <TextView
+                    android:id="@+id/y_text"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅛ"
@@ -1494,10 +1507,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/u_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -1510,6 +1523,8 @@
 
 
                 <TextView
+                    android:id="@+id/u_text"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅕ"
@@ -1525,10 +1540,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/i_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -1541,6 +1556,7 @@
 
 
                 <TextView
+                    android:id="@+id/i_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅑ"
@@ -1555,10 +1571,10 @@
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/delete_button"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -1571,6 +1587,7 @@
 
 
                 <TextView
+                    android:id="@+id/delete_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="삭제"
@@ -1596,12 +1613,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/a_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1614,6 +1631,7 @@
 
 
                 <TextView
+                    android:id="@+id/a_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅁ"
@@ -1629,10 +1647,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/s_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1645,6 +1663,7 @@
 
 
                 <TextView
+                    android:id="@+id/s_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="ㄴ"
@@ -1660,10 +1679,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/d_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1676,6 +1695,7 @@
 
 
                 <TextView
+                    android:id="@+id/d_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅇ"
@@ -1691,10 +1711,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/f_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1707,6 +1727,7 @@
 
 
                 <TextView
+                    android:id="@+id/f_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㄹ"
@@ -1722,10 +1743,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/g_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1738,6 +1759,7 @@
 
 
                 <TextView
+                    android:id="@+id/g_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅎ"
@@ -1753,10 +1775,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/h_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1769,6 +1791,7 @@
 
 
                 <TextView
+                    android:id="@+id/h_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅗ"
@@ -1784,10 +1807,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/j_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1800,6 +1823,7 @@
 
 
                 <TextView
+                    android:id="@+id/j_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅓ"
@@ -1815,10 +1839,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/k_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1831,6 +1855,7 @@
 
 
                 <TextView
+                    android:id="@+id/k_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅏ"
@@ -1846,10 +1871,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/l_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1862,6 +1887,7 @@
 
 
                 <TextView
+                    android:id="@+id/l_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="ㅣ"
@@ -1890,12 +1916,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/z_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -1909,6 +1935,7 @@
 
 
                 <TextView
+                    android:id="@+id/z_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅋ"
@@ -1924,10 +1951,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/x_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             android:onClick="@{viewModel::keyboardOnClick}"
             app:cardCornerRadius="8dp">
@@ -1941,6 +1968,7 @@
 
 
                 <TextView
+                    android:id="@+id/x_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅌ"
@@ -1956,10 +1984,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/c_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -1973,6 +2001,7 @@
 
 
                 <TextView
+                    android:id="@+id/c_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅊ"
@@ -1988,10 +2017,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/v_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -2005,6 +2034,7 @@
 
 
                 <TextView
+                    android:id="@+id/v_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅍ"
@@ -2020,10 +2050,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/b_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -2037,6 +2067,7 @@
 
 
                 <TextView
+                    android:id="@+id/b_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅠ"
@@ -2052,10 +2083,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/n_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -2069,6 +2100,7 @@
 
 
                 <TextView
+                    android:id="@+id/n_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅜ"
@@ -2084,10 +2116,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/m_button"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -2101,6 +2133,7 @@
 
 
                 <TextView
+                    android:id="@+id/m_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ㅡ"
@@ -2116,10 +2149,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/submit_button"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
 
@@ -2131,6 +2164,7 @@
 
 
                 <TextView
+                    android:id="@+id/submit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="입력"
@@ -2149,7 +2183,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/question"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
