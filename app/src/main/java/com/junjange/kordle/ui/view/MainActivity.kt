@@ -1,6 +1,7 @@
 package com.junjange.kordle.ui.view
 import kotlin.random.Random
 import android.graphics.Color
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,8 +24,12 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileReader
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -40,36 +45,33 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24) // 홈버튼 이미지 변경
         supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바에 타이틀 안보이게
 
-        var eventIdx =  eventDate()
-        var kordelWords =  readTextFile()
-        var currectText = getWord(kordelWords)
+        var eventIdx =  eventDate() // 현재 단어 idx
+        var kordelWords =  readTextFile() // 모든 코들 단어
+        var currectText = getWord(kordelWords, eventIdx) // 무작위로 코들 단어 하나 가져오기
         Log.d("ttt가져온 유니코드 확인", kordelWords.toString())
-        Log.d("ttt가져온 유니코드 확인", kordelWords.size.toString())
+        Log.d("ttt가져온 유니코드 개수", kordelWords.size.toString())
         Log.d("ttt정답 유니코드 확인", currectText.toString())
+        Log.d("정답 유니코드 문자열", currectText.joinToString(""))
 
 
 
 
-        // 텍스트뷰에 현재시간 출력
-        val end = 24 * 60 * 60
 
-        // 텍스트뷰에 현재시간 출력
-        val start = System.currentTimeMillis()
-        Log.d("Ttt123t", start.toString())
-        val date = Date(1 * 60 * 24 * 60)
-        val mFormat = SimpleDateFormat("HH:mm:ss")
+        binding.keyboard0.visibility = View.VISIBLE
+        binding.keyboard1.visibility = View.VISIBLE
+        binding.keyboard2.visibility = View.VISIBLE
 
-        val time = mFormat.format(date)
-
-        var a = mFormat.format(Date(mFormat.parse("23:59:59").time ))
-        var b = mFormat.format(Date(System.currentTimeMillis()))
-        Log.d("ttt시간 확인2", (mFormat.format(Date(mFormat.parse("23:59:59").time ))).toString())
-
-        Log.d("ttt시간 확인", (mFormat.format(Date(System.currentTimeMillis()))).toString())
-        Log.d("ttt시간 확인333",  mFormat.format(Date( mFormat.parse("23:59:59").time - System.currentTimeMillis())))
+        binding.endGame.visibility = View.GONE
 
 
-        Log.d("Ttt", currectText.joinToString(""))
+
+
+        var answerWord = ""
+        currectText.forEach { answerWord += convertUnicodeToString(it)+" " }
+        binding.answerWord.text = "정답은 \"${answerWord}\"입니다."
+
+        Log.d("Ttt3", stringToConvertUnicode(answerWord))
+
 
         // 답안 박스
         val box = arrayOf(arrayOf(binding.box0,  binding.box1,  binding.box2,  binding.box3,  binding.box4,  binding.box5),
@@ -268,18 +270,45 @@ class MainActivity : AppCompatActivity() {
 
                     }
 
+                    // 정답을 맞추었거나 기회를 놓쳤을 경우
+                    if(answer == 6 || currentLine == 5){
+                        if(answer == 6){
+                            Toast.makeText(this@MainActivity, "정답입니다!", Toast.LENGTH_SHORT).show()
+                            viewModel.flag.value = true
+                        }else if(currentLine == 5){
+                            viewModel.flag.value = true
+                            Toast.makeText(this@MainActivity, "아쉽게도 정답을 맞추지 못했습니다.", Toast.LENGTH_SHORT).show()
 
-                    if(answer == 6){
-                        Toast.makeText(this@MainActivity, "정답입니다!", Toast.LENGTH_SHORT).show()
-                        viewModel.flag.value = true
+                        }
+
+                        // 다음 문제까지 남은 시간 타이머로 보여줌
+                        var timerTask = kotlin.concurrent.timer(period = 1000) {    // timer() 호출
 
 
+                            // UI조작을 위한 메서드
+                            runOnUiThread {
+                                // 남은 시간
+                                val currentTimeMillis = System.currentTimeMillis()
+                                val mFormat = SimpleDateFormat("HH:mm:ss")
+                                var timeRemaining = mFormat.format(Date( mFormat.parse("-09:00:00").time - currentTimeMillis))
+                                binding.nextTime.text = timeRemaining
 
-                    }else if(currentLine == 5){
-                        viewModel.flag.value = true
-                        Toast.makeText(this@MainActivity, "아쉽게도 정답을 맞추지 못했습니다.", Toast.LENGTH_SHORT).show()
 
-                   } else{
+                            }
+                        }
+
+                        // 남은 시간 타이머 끄기
+//                        timerTask.cancel()
+
+
+                        binding.keyboard0.visibility = View.GONE
+                        binding.keyboard1.visibility = View.GONE
+                        binding.keyboard2.visibility = View.GONE
+                        binding.endGame.visibility = View.VISIBLE
+                        
+
+
+                    }else{
 
                         boxLine[currentLine].animate().scaleX(1.05f).scaleY(1.05f).setDuration(150).withEndAction {
 
@@ -295,10 +324,6 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 }
-
-
-
-
 
             }
 
@@ -345,7 +370,8 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun eventDate(): Long {
+    // 현재 날짜와 시작 날짜에 차이를 통해 문제를 갱신
+    private fun eventDate(): Int {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
         val startDate = dateFormat.parse("2022-07-22 00:00:00").time
@@ -362,31 +388,8 @@ class MainActivity : AppCompatActivity() {
         println("ttt두 날짜간의 차이(일) : ${(endDate - startDate) / (24 * 60 * 60 * 1000)}")
         println("ttt시작일 부터 경과 일 : ${(today - startDate) / (24 * 60 * 60 * 1000)}")
         println("ttt목표일 까지 남은 일(D-DAY) : ${(endDate - today) / (24 * 60 * 60 * 1000)}")
-        return endDate - startDate
+        return ((today - startDate) / (24 * 60 * 60 * 1000)).toInt()
     }
-
-    private fun nextEvent(): Long {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-
-        val startDate = dateFormat.parse("2022-07-22 00:00:00").time
-        val endDate = dateFormat.parse("2022-07-25 00:00:00").time
-        val today = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.time.time
-
-        println("ttt 현재 : ${(today) / (24 * 60 * 60 * 1000)}")
-
-        println("ttt두 날짜간의 차이(일) : ${(endDate - startDate) / (24 * 60 * 60 * 1000)}")
-        println("ttt시작일 부터 경과 일 : ${(today - startDate) / (24 * 60 * 60 * 1000)}")
-        println("ttt목표일 까지 남은 일(D-DAY) : ${(endDate - today) / (24 * 60 * 60 * 1000)}")
-        return endDate - startDate
-    }
-
-
-
 
     // kordle_unicode_words에서 모든 단어 가져오기/
     private fun readTextFile(): List<String> {
@@ -405,25 +408,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     // kordle_unicode_words에서 하나의 단어를 가져오기.
-    private fun getWord(word : List<String>): ArrayList<String> {
+    private fun getWord(word : List<String>, index : Int): ArrayList<String> {
         var temp = ""
         var tempText = arrayListOf<String>()
-        while (tempText.size != 6){
-            tempText = arrayListOf<String>()
-            var wordRandom = word.shuffled()[0]
-            wordRandom.forEach { it ->
-                if(temp.length == 6){
-                    tempText.add(temp)
-                    temp =  it.toString()
-                }else{
-                    temp += it
 
-                }
+//        var wordRandom = word.shuffled()[0] // 무작위로 하나의 단어를 가져오기.
+        var wordRandom = word[index]
+        wordRandom.forEach { it ->
+            if(temp.length == 6){
+                tempText.add(temp)
+                temp =  it.toString()
+            }else{
+                temp += it
+
             }
-            tempText.add(temp)
-
-
         }
+        tempText.add(temp)
+
+
         return tempText
 
     }
@@ -443,26 +445,18 @@ class MainActivity : AppCompatActivity() {
         return text
     }
 
+    // 유니코드 => 문자열
+    private fun convertUnicodeToString(unicodeString: String): String {
+        var str: String = unicodeString.split(" ")[0]
+        str = str.replace("\\", "")
+        val arr = str.split("u").toTypedArray()
+        var text = ""
+        for (i in 1 until arr.size) {
+            val hexVal = arr[i].toInt(16)
+            text += hexVal.toChar()
+        }
 
-
-    /**
-     * 아직 사용하지는 않지만
-     * 혹시나 나중에 사용할 수 도 있음.
-     *
-     * */
-
-//    // 유니코드 => 문자열
-//    private fun convertUnicodeToString(unicodeString: String): String {
-//        var str: String = unicodeString.split(" ")[0]
-//        str = str.replace("\\", "")
-//        val arr = str.split("u").toTypedArray()
-//        var text = ""
-//        for (i in 1 until arr.size) {
-//            val hexVal = arr[i].toInt(16)
-//            text += hexVal.toChar()
-//        }
-//
-//        return text
-//    }
+        return text
+    }
 
 }
