@@ -6,8 +6,7 @@
     android:gravity="center_horizontal"
     android:minWidth="300dp"
     android:minHeight="400dp"
-    android:orientation="vertical"
-    android:background="@drawable/alert_white_border">
+    android:orientation="vertical">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -21,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="설정"
+            android:text="풀이 방법"
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:textSize="24sp"
@@ -45,11 +44,10 @@
         android:id="@+id/explanation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:textSize="18sp"
         android:layout_margin="5dp"
         android:background="?attr/selectableItemBackground"
-        tools:text="풀이 방법" />
+        tools:text="무작위 단어를 6번 안에 맞춰보세요.\n제출 후에 변화하는 글자의 바탕색으로\n정답을 유출할 수 있습니다." />
     <TextView
         android:id="@+id/statistics"
         android:layout_width="wrap_content"

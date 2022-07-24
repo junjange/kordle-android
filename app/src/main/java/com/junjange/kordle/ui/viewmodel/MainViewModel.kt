@@ -10,24 +10,23 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: KordleRepository) : ViewModel() {
 
-//    val roomKordle: LiveData<List<KordleEntity>> = repository.roomGetAllKordle()
-//    val roomKordleInput: MutableLiveData<String> = MutableLiveData()
+    val roomKordle: LiveData<KordleEntity> = repository.roomGetAllKordle()
 
     private val _keyboardText = MutableLiveData<String>()
-    private  val _flag = MutableLiveData<Boolean>(false)
+//    private  val _flag = MutableLiveData<Boolean>(false)
 
 
     val keyboardText : MutableLiveData<String>
     get() = _keyboardText
 
-    val flag : MutableLiveData<Boolean>
-        get() = _flag
+//    val flag : MutableLiveData<Boolean>
+//        get() = _flag
 
     // 코루틴으로 Room 제어
-//    fun insertRoom() = viewModelScope.launch {
-//        repository.roomInsertKordle(KordleEntity(0, "", ""))
-//        roomKordleInput.value = ""
-//    }
+    fun updateRoom(kordleEntity: KordleEntity) = viewModelScope.launch {
+        repository.roomUpdateKordle(kordleEntity)
+    }
+
 
     private val keyboardToText = hashMapOf(
         "q_button" to "ㅂ", "w_button" to "ㅈ", "e_button" to "ㄷ", "r_button" to "ㄱ", "t_button" to "ㅅ", "y_button" to "ㅛ", "u_button" to "ㅕ", "i_button" to "ㅑ",

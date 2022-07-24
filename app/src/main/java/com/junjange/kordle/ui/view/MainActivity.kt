@@ -34,11 +34,14 @@ import kotlin.concurrent.timer
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel by lazy { ViewModelProvider(this, MainViewModel.Factory(application))[MainViewModel::class.java] }
+    private var timerTask: Timer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        setObserver()
 
         setSupportActionBar(binding.mainToolbar) // 툴바를 액티비티의 앱바로 지정
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // 드로어를 꺼낼 홈 버튼 활성화
@@ -60,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         binding.keyboard0.visibility = View.VISIBLE
         binding.keyboard1.visibility = View.VISIBLE
         binding.keyboard2.visibility = View.VISIBLE
-
         binding.endGame.visibility = View.GONE
 
 
@@ -108,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         )
 
 
-        val solveLine = Array(6){ i -> false} // 각 라인별 해결유무
+        var solveLine = Array(6){ i -> false} // 각 라인별 해결유무
         var checkUnicode = Array(6){ i -> ""} // 각 라인별 유니코드
         var currentLine : Int = 0 // 현재 라인
         var currentBox : Int = 0 // 현재 박스 위치
@@ -120,7 +122,7 @@ class MainActivity : AppCompatActivity() {
          * */
         viewModel.keyboardText.observe(this, {
 
-            if (viewModel.flag.value == false){
+//            if (viewModel.flag.value == false){
                 viewModel.keyboardText.value?.let { it ->
                     Log.d("Tttt", it.toString())
 
@@ -153,7 +155,7 @@ class MainActivity : AppCompatActivity() {
 
                         }
                     }
-                }
+//                }
             }
         })
 
@@ -164,7 +166,7 @@ class MainActivity : AppCompatActivity() {
          * */
 
         binding.deleteButton.setOnClickListener{
-            if (viewModel.flag.value == false){
+//            if (viewModel.flag.value == false){
                 if(currentBox in 1..6){
                     boxText[currentLine][currentBox-1].text = ""
                     box[currentLine][currentBox-1].strokeColor = Color.parseColor("#e2e8f0")
@@ -177,7 +179,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
-            }
+//            }
 
         }
 
@@ -274,15 +276,15 @@ class MainActivity : AppCompatActivity() {
                     if(answer == 6 || currentLine == 5){
                         if(answer == 6){
                             Toast.makeText(this@MainActivity, "정답입니다!", Toast.LENGTH_SHORT).show()
-                            viewModel.flag.value = true
+//                            viewModel.flag.value = true
                         }else if(currentLine == 5){
-                            viewModel.flag.value = true
+//                            viewModel.flag.value = true
                             Toast.makeText(this@MainActivity, "아쉽게도 정답을 맞추지 못했습니다.", Toast.LENGTH_SHORT).show()
 
                         }
 
                         // 다음 문제까지 남은 시간 타이머로 보여줌
-                        var timerTask = kotlin.concurrent.timer(period = 1000) {    // timer() 호출
+                        timerTask = kotlin.concurrent.timer(period = 1000) {    // timer() 호출
 
 
                             // UI조작을 위한 메서드
@@ -297,15 +299,18 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
 
-                        // 남은 시간 타이머 끄기
-//                        timerTask.cancel()
+
+
 
 
                         binding.keyboard0.visibility = View.GONE
                         binding.keyboard1.visibility = View.GONE
                         binding.keyboard2.visibility = View.GONE
                         binding.endGame.visibility = View.VISIBLE
-                        
+
+
+
+
 
 
                     }else{
@@ -329,12 +334,69 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
+        // 이 놀이는? 버튼
         binding.question.setOnClickListener {
             val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
             val bottomSheetDialog = BottomSheetDialog(this, R.style.AppBottomSheetDialogTheme)
             bottomSheetDialog.setContentView(bottomSheetView)
             bottomSheetDialog.show()
+
+        }
+
+        binding.unravelAgainBtn.setOnClickListener {
+
+            // 남은 시간 타이머 끄기
+            timerTask?.cancel()
+
+
+            binding.keyboard0.visibility = View.VISIBLE
+            binding.keyboard1.visibility = View.VISIBLE
+            binding.keyboard2.visibility = View.VISIBLE
+            binding.endGame.visibility = View.GONE
+
+            solveLine = Array(6){ i -> false} // 각 라인별 해결유무
+            checkUnicode = Array(6){ i -> ""} // 각 라인별 유니코드
+            currentLine  = 0 // 현재 라인
+            currentBox  = 0 // 현재 박스 위치
+
+            box.forEach { it.forEach {
+                it.setCardBackgroundColor(Color.WHITE)
+                it.strokeColor = Color.parseColor("#e2e8f0")
+
+
+            } }
+
+            boxText.forEach { it.forEach {
+                it.setTextColor(Color.BLACK)
+                it.text = ""
+            } }
+
+            keyboard.values.forEach{
+                it.setCardBackgroundColor(Color.parseColor("#e2e8f0"))
+                it.strokeColor = Color.parseColor("#e2e8f0")
+
+
+            }
+
+            keyboardText.values.forEach {
+                it.setTextColor(Color.BLACK)
+
+            }
+
+
+        }
+
+
+
+    }
+
+    private fun setObserver() {
+        CoroutineScope(Dispatchers.Main).launch{
+            viewModel.roomKordle.observe(this@MainActivity, {
+                Log.d("ttt", viewModel.roomKordle.value.toString())
+
+
+            })
 
         }
 
@@ -354,15 +416,58 @@ class MainActivity : AppCompatActivity() {
                     .setView(view)
                     .create()
 
-                val textTitle = view.findViewById<TextView>(R.id.confirmTextView)
-                val buttonConfirm =  view.findViewById<TextView>(R.id.yesButton)
-                val buttonClose =  view.findViewById<View>(R.id.noButton)
 
-                textTitle.text = "로그인 해볼까요?"
-                buttonConfirm.text = "로그인 하기"
-                buttonClose.setOnClickListener {
-                    alertDialog.dismiss()
+
+                val explanation = view.findViewById<TextView>(R.id.explanation)
+                val statistics = view.findViewById<TextView>(R.id.statistics)
+                val evaluation = view.findViewById<TextView>(R.id.evaluation)
+
+                explanation.text = "풀이 방법"
+                statistics.text = "통계"
+                evaluation.text = "평가 하기"
+
+
+
+                explanation.setOnClickListener {
+                    Log.d("ttt", "눌렸다.")
+                    val layoutInflater2 = LayoutInflater.from(this)
+                    val view2 = layoutInflater2.inflate(R.layout.alert_dialog2, null)
+
+                    val alertDialog2 = AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                        .setView(view2)
+                        .create()
+
+
+                    alertDialog2.show()
                 }
+                statistics.setOnClickListener {
+                    Log.d("ttt", "눌렸다.")
+                }
+                evaluation.setOnClickListener {
+                    Log.d("ttt", "눌렸다.")
+                }
+
+
+
+//                buttonConfirm.setOnClickListener {
+//
+//                    val layoutInflater2 = LayoutInflater.from(this)
+//                    val view2 = layoutInflater2.inflate(R.layout.alert_dialog2, null)
+//
+//                    val alertDialog2 = AlertDialog.Builder(this, R.style.CustomAlertDialog)
+//                        .setView(view2)
+//                        .create()
+//
+//                    val textTitle2 = view.findViewById<TextView>(R.id.confirmTextView)
+//                    val buttonConfirm2 =  view.findViewById<TextView>(R.id.yesButton)
+//                    val buttonClose2 =  view.findViewById<View>(R.id.noButton)
+//
+//                    textTitle2.text = "로그인 해볼까요?"
+//                    buttonConfirm2.text = "로그인 하기"
+//                    alertDialog2.show()
+//
+//
+//                }
                 alertDialog.show()
 
             }

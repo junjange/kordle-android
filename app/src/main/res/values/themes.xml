@@ -38,6 +38,7 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:colorBackground">?attr/colorBackgroundFloating</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:background">@drawable/alert_white_border</item>
 
         <!-- Dialog 가 센터에 나오도록 하자. -->
         <item name="android:windowIsFloating">true</item>

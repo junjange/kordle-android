@@ -9,13 +9,13 @@ class KordleRepository(application : Application) {
     // Room Dao
     private val kordleDao = KordleDatabase.getInstance(application)!!.kordleDao()
 
-//    // Use Room
-//    fun roomGetAllKordle(): LiveData<List<KordleEntity>> {
-//        return kordleDao.getAll()
-//    }
-//    suspend fun roomInsertKordle(kordleEntity: KordleEntity) {
-//        kordleDao.insert(kordleEntity)
-//    }
+    // Use Room
+    fun roomGetAllKordle(): LiveData<KordleEntity> {
+        return kordleDao.getAll()
+    }
+    suspend fun roomUpdateKordle(kordleEntity: KordleEntity) {
+        kordleDao.update(kordleEntity)
+    }
 
     // singleton pattern
     companion object {
