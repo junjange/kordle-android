@@ -1457,7 +1457,7 @@
 
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/normal"
+            app:cardBackgroundColor="@color/normal"
             android:onClick="@{viewModel::keyboardOnClick}"
             android:clipToPadding="true"
             app:cardCornerRadius="8dp">
@@ -2247,7 +2247,7 @@
             android:id="@+id/answer_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_margin="15dp"

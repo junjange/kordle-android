@@ -1,78 +1,72 @@
 package com.junjange.kordle.ui.view
-import kotlin.random.Random
 import android.graphics.Color
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.junjange.kordle.R
-import com.junjange.kordle.databinding.ActivityMainBinding
 import com.junjange.kordle.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileReader
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.concurrent.timer
+import android.content.Intent
+import com.junjange.kordle.data.AnswerCnt
+import com.junjange.kordle.databinding.ActivityMainBinding
+import com.junjange.kordle.room.KordleEntity
+import com.junjange.kordle.ui.view.dialog.ExplanationDialog
+import com.junjange.kordle.ui.view.dialog.SetDialog
+
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel by lazy { ViewModelProvider(this, MainViewModel.Factory(application))[MainViewModel::class.java] }
     private var timerTask: Timer? = null
+    var lastDay : Long = 0
+    var eventIdx : Int = 0
+    lateinit var kordelWords : List<String>
+    lateinit var currectText : ArrayList<String>
+    lateinit var kordleModel : KordleEntity
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        setObserver()
 
+
+        setObserver()
         setSupportActionBar(binding.mainToolbar) // 툴바를 액티비티의 앱바로 지정
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // 드로어를 꺼낼 홈 버튼 활성화
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24) // 홈버튼 이미지 변경
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_settings_24) // 홈버튼 이미지 변경
         supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바에 타이틀 안보이게
-
-        var eventIdx =  eventDate() // 현재 단어 idx
-        var kordelWords =  readTextFile() // 모든 코들 단어
-        var currectText = getWord(kordelWords, eventIdx) // 무작위로 코들 단어 하나 가져오기
-        Log.d("ttt가져온 유니코드 확인", kordelWords.toString())
-        Log.d("ttt가져온 유니코드 개수", kordelWords.size.toString())
-        Log.d("ttt정답 유니코드 확인", currectText.toString())
-        Log.d("정답 유니코드 문자열", currectText.joinToString(""))
+        eventDate()
+//        var eventIdx =  eventDate() // 현재 단어 idx
+//        var kordelWords =  readTextFile() // 모든 코들 단어
+//        var currectText = getWord(kordelWords, eventIdx) // 무작위로 코들 단어 하나 가져오기
+        Log.d("ttt0", eventIdx.toString())
 
 
-
-
-
-        binding.keyboard0.visibility = View.VISIBLE
-        binding.keyboard1.visibility = View.VISIBLE
-        binding.keyboard2.visibility = View.VISIBLE
-        binding.endGame.visibility = View.GONE
+//        Log.d("ttt가져온 유니코드 확인", kordelWords.toString())
+//        Log.d("ttt가져온 유니코드 개수", kordelWords.size.toString())
+//        Log.d("ttt정답 유니코드 확인", currectText.toString())
+//        Log.d("정답 유니코드 문자열", currectText.joinToString(""))
 
 
 
 
-        var answerWord = ""
-        currectText.forEach { answerWord += convertUnicodeToString(it)+" " }
-        binding.answerWord.text = "정답은 \"${answerWord}\"입니다."
+//        currectText.forEach { answerWord += convertUnicodeToString(it)+" " }
+//        binding.answerWord.text = "정답은 \"${answerWord}\"입니다."
 
-        Log.d("Ttt3", stringToConvertUnicode(answerWord))
+//        Log.d("Ttt3", stringToConvertUnicode(answerWord))
+//        Log.d("ttt000", eventIdx.toString())
 
 
         // 답안 박스
@@ -272,16 +266,99 @@ class MainActivity : AppCompatActivity() {
 
                     }
 
+
                     // 정답을 맞추었거나 기회를 놓쳤을 경우
                     if(answer == 6 || currentLine == 5){
+                        var currentSolve : Boolean
+                        var solveProblemsCnt : Int
+
                         if(answer == 6){
                             Toast.makeText(this@MainActivity, "정답입니다!", Toast.LENGTH_SHORT).show()
-//                            viewModel.flag.value = true
-                        }else if(currentLine == 5){
-//                            viewModel.flag.value = true
+                            solveProblemsCnt = 1
+                            currentSolve = true
+                        }else{
                             Toast.makeText(this@MainActivity, "아쉽게도 정답을 맞추지 못했습니다.", Toast.LENGTH_SHORT).show()
+                            solveProblemsCnt = 0
+                            currentSolve = false
 
                         }
+
+                        // 현재 날짜
+                        val today = Calendar.getInstance().apply {
+                            set(Calendar.HOUR_OF_DAY, 0)
+                            set(Calendar.MINUTE, 0)
+                            set(Calendar.SECOND, 0)
+                            set(Calendar.MILLISECOND, 0)
+                        }.time.time
+
+                        if ((today - lastDay) / (24 * 60 * 60 * 1000) > 0){
+
+                            // DB 저장
+                            CoroutineScope(Dispatchers.Main).launch{
+
+
+                                // 현재 연승
+                                var currentWinningStreak: Int
+                                if (answer == 0){
+                                    currentWinningStreak = 0
+
+                                }else if (kordleModel.preSolve == false){
+                                    currentWinningStreak = 1
+
+                                }else{
+                                    currentWinningStreak = kordleModel.currentWinningStreak + 1
+                                }
+
+
+                                // 최다 연승
+                                var mostWinStreak: Int
+                                if (currentWinningStreak >= kordleModel.mostWinStreak){
+                                    mostWinStreak = currentWinningStreak
+                                }else{
+                                    mostWinStreak = kordleModel.mostWinStreak
+                                }
+
+                                // 도전 분포
+                                var one = kordleModel.AnswerCnt.one
+                                var two = kordleModel.AnswerCnt.two
+                                var three = kordleModel.AnswerCnt.three
+                                var four = kordleModel.AnswerCnt.four
+                                var five = kordleModel.AnswerCnt.five
+                                var six = kordleModel.AnswerCnt.six
+
+                                if (answer == 6){
+                                    when (currentLine){
+                                        0 -> one ++
+                                        1 -> two ++
+                                        2 -> three ++
+                                        3 -> four ++
+                                        4 -> five ++
+                                        5 -> six ++
+
+                                    }
+
+                                }
+
+                                viewModel.updateRoom(KordleEntity(
+                                    id = 0,
+                                    lastDay = today,
+                                    preSolve = currentSolve,
+                                    allProblemsCnt = kordleModel.allProblemsCnt +1 ,
+                                    solveProblemsCnt= kordleModel.solveProblemsCnt + solveProblemsCnt ,
+                                    correctAnswerRate = (((kordleModel.solveProblemsCnt + solveProblemsCnt) / (kordleModel.allProblemsCnt +1)) * 100).toDouble(),
+                                    currentWinningStreak = currentWinningStreak ,
+                                    mostWinStreak = mostWinStreak,
+                                    AnswerCnt = AnswerCnt(one, two, three, four, five, six)))
+
+                                Log.d("Ttt" , viewModel.roomKordle.value?.get(0)?.id.toString())
+
+
+                            }
+
+                        }
+
+
+
 
                         // 다음 문제까지 남은 시간 타이머로 보여줌
                         timerTask = kotlin.concurrent.timer(period = 1000) {    // timer() 호출
@@ -391,84 +468,125 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setObserver() {
-        CoroutineScope(Dispatchers.Main).launch{
-            viewModel.roomKordle.observe(this@MainActivity, {
-                Log.d("ttt", viewModel.roomKordle.value.toString())
+        Log.d("Ttt1111", "11111")
+
+        binding.keyboard0.visibility = View.GONE
+        binding.keyboard1.visibility = View.GONE
+        binding.keyboard2.visibility = View.GONE
+        binding.endGame.visibility = View.GONE
 
 
-            })
+        viewModel.roomKordle.observe(this@MainActivity, {
+            Log.d("Ttt22222", it[0].toString())
 
-        }
+            kordleModel = it[0]
+            Log.d("Ttt22222", kordleModel.toString())
+
+            lastDay = kordleModel.lastDay
 
 
+            val today = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }.time.time
+
+            Log.d("ttt", ((today - lastDay) / (24 * 60 * 60 * 1000)).toString())
+
+
+
+            if (today == lastDay){
+                eventIdx = kordleModel.allProblemsCnt
+
+                // 다음 문제까지 남은 시간 타이머로 보여줌
+                timerTask = kotlin.concurrent.timer(period = 1000) {    // timer() 호출
+
+
+                    // UI조작을 위한 메서드
+                    runOnUiThread {
+                        // 남은 시간
+                        val currentTimeMillis = System.currentTimeMillis()
+                        val mFormat = SimpleDateFormat("HH:mm:ss")
+                        var timeRemaining = mFormat.format(Date( mFormat.parse("-09:00:00").time - currentTimeMillis))
+                        binding.nextTime.text = timeRemaining
+
+
+                    }
+                }
+
+                binding.keyboard0.visibility = View.GONE
+                binding.keyboard1.visibility = View.GONE
+                binding.keyboard2.visibility = View.GONE
+                binding.endGame.visibility = View.VISIBLE
+
+                // 마지막으로 문제를 푼 날에서 시간이 흘렀다면
+            } else if((today - lastDay) / (24 * 60 * 60 * 1000) > 0){
+
+                eventIdx = kordleModel.allProblemsCnt + 1
+                Log.d("ttt1", eventIdx.toString())
+
+                // 남은 시간 타이머 끄기
+                timerTask?.cancel()
+
+
+                binding.keyboard0.visibility = View.VISIBLE
+                binding.keyboard1.visibility = View.VISIBLE
+                binding.keyboard2.visibility = View.VISIBLE
+                binding.endGame.visibility = View.GONE
+
+
+
+            }else{
+                eventIdx = kordleModel.allProblemsCnt - 1
+                Log.d("ttt2", eventIdx.toString())
+
+                // 다음 문제까지 남은 시간 타이머로 보여줌
+                timerTask = kotlin.concurrent.timer(period = 1000) {    // timer() 호출
+
+
+                    // UI조작을 위한 메서드
+                    runOnUiThread {
+                        // 남은 시간
+                        val currentTimeMillis = System.currentTimeMillis()
+                        val mFormat = SimpleDateFormat("HH:mm:ss")
+                        var timeRemaining = mFormat.format(Date( mFormat.parse("-09:00:00").time - currentTimeMillis))
+                        binding.nextTime.text = timeRemaining
+
+
+                    }
+                }
+
+                binding.keyboard0.visibility = View.GONE
+                binding.keyboard1.visibility = View.GONE
+                binding.keyboard2.visibility = View.GONE
+                binding.endGame.visibility = View.VISIBLE
+
+
+
+            }
+
+            kordelWords =  readTextFile() // 모든 코들 단어
+            currectText = getWord(kordelWords, eventIdx) // 무작위로 코들 단어 하나 가져오기
+
+            var answerWord = ""
+            currectText.forEach { answerWord += convertUnicodeToString(it)+" " }
+            binding.answerWord.text = "정답은 \"${answerWord}\"입니다."
+            Log.d("ttt", answerWord)
+
+
+        })
 
     }
+
+
 
 
     // appbar navi menu button
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home->{ // 메뉴 버튼
-                val layoutInflater = LayoutInflater.from(this)
-                val view = layoutInflater.inflate(R.layout.alert_dialog, null)
-
-                val alertDialog = AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                    .setView(view)
-                    .create()
-
-
-
-                val explanation = view.findViewById<TextView>(R.id.explanation)
-                val statistics = view.findViewById<TextView>(R.id.statistics)
-                val evaluation = view.findViewById<TextView>(R.id.evaluation)
-
-                explanation.text = "풀이 방법"
-                statistics.text = "통계"
-                evaluation.text = "평가 하기"
-
-
-
-                explanation.setOnClickListener {
-                    Log.d("ttt", "눌렸다.")
-                    val layoutInflater2 = LayoutInflater.from(this)
-                    val view2 = layoutInflater2.inflate(R.layout.alert_dialog2, null)
-
-                    val alertDialog2 = AlertDialog.Builder(this, R.style.CustomAlertDialog)
-                        .setView(view2)
-                        .create()
-
-
-                    alertDialog2.show()
-                }
-                statistics.setOnClickListener {
-                    Log.d("ttt", "눌렸다.")
-                }
-                evaluation.setOnClickListener {
-                    Log.d("ttt", "눌렸다.")
-                }
-
-
-
-//                buttonConfirm.setOnClickListener {
-//
-//                    val layoutInflater2 = LayoutInflater.from(this)
-//                    val view2 = layoutInflater2.inflate(R.layout.alert_dialog2, null)
-//
-//                    val alertDialog2 = AlertDialog.Builder(this, R.style.CustomAlertDialog)
-//                        .setView(view2)
-//                        .create()
-//
-//                    val textTitle2 = view.findViewById<TextView>(R.id.confirmTextView)
-//                    val buttonConfirm2 =  view.findViewById<TextView>(R.id.yesButton)
-//                    val buttonClose2 =  view.findViewById<View>(R.id.noButton)
-//
-//                    textTitle2.text = "로그인 해볼까요?"
-//                    buttonConfirm2.text = "로그인 하기"
-//                    alertDialog2.show()
-//
-//
-//                }
-                alertDialog.show()
+                startActivity(Intent(this, SetDialog::class.java))
 
             }
         }
@@ -476,10 +594,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 현재 날짜와 시작 날짜에 차이를 통해 문제를 갱신
-    private fun eventDate(): Int {
+    private fun eventDate() {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-        val startDate = dateFormat.parse("2022-07-22 00:00:00").time
+        val startDate = dateFormat.parse("2022-07-24 09:00:00").time
         val endDate = dateFormat.parse("2022-07-25 00:00:00").time
         val today = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 0)
@@ -489,11 +607,14 @@ class MainActivity : AppCompatActivity() {
         }.time.time
 
         println("ttt 현재 : ${(today) / (24 * 60 * 60 * 1000)}")
+        println("ttt 현재123 : ${(today)}")
+        println("ttt 현재123 : ${(endDate)}")
+
+
 
         println("ttt두 날짜간의 차이(일) : ${(endDate - startDate) / (24 * 60 * 60 * 1000)}")
-        println("ttt시작일 부터 경과 일 : ${(today - startDate) / (24 * 60 * 60 * 1000)}")
+        println("ttt시작일 부터 경과 일 : ${(1658674800000 - 1658588400000) / (24 * 60 * 60 * 1000)}")
         println("ttt목표일 까지 남은 일(D-DAY) : ${(endDate - today) / (24 * 60 * 60 * 1000)}")
-        return ((today - startDate) / (24 * 60 * 60 * 1000)).toInt()
     }
 
     // kordle_unicode_words에서 모든 단어 가져오기/
@@ -563,5 +684,9 @@ class MainActivity : AppCompatActivity() {
 
         return text
     }
+
+
+
+
 
 }

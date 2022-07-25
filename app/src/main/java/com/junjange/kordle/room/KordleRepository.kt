@@ -10,7 +10,7 @@ class KordleRepository(application : Application) {
     private val kordleDao = KordleDatabase.getInstance(application)!!.kordleDao()
 
     // Use Room
-    fun roomGetAllKordle(): LiveData<KordleEntity> {
+    fun roomGetAllKordle():  LiveData<List<KordleEntity>> {
         return kordleDao.getAll()
     }
     suspend fun roomUpdateKordle(kordleEntity: KordleEntity) {

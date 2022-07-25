@@ -5,6 +5,7 @@ data class AnswerCnt(
     var two: Int,
     var three : Int,
     var four : Int,
-    var five : Int
+    var five : Int,
+    var six : Int
 
 )

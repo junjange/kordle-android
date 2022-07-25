@@ -7,11 +7,11 @@ import androidx.room.*
 interface KordleDao {
     // 데이터 베이스 불러오기
     @Query("SELECT * from Kordle")
-    fun getAll(): LiveData<KordleEntity>
+    fun getAll():  LiveData<List<KordleEntity>>
 
     // 데이터 추가
-//    @Insert(onConflict = OnConflictStrategy.IGNORE)
-//   suspend fun insert(kordleEntity: KordleEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+   suspend fun insert(kordleEntity: KordleEntity)
 
     // 데이터 전체 삭제
     @Query("DELETE FROM Kordle")
