@@ -22,6 +22,7 @@ import com.junjange.kordle.databinding.ActivityMainBinding
 import com.junjange.kordle.room.KordleEntity
 import com.junjange.kordle.ui.view.dialog.ExplanationDialog
 import com.junjange.kordle.ui.view.dialog.SetDialog
+import kotlin.math.round
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var kordelWords : List<String>
     lateinit var currectText : ArrayList<String>
     lateinit var kordleModel : KordleEntity
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
 //        Log.d("Ttt3", stringToConvertUnicode(answerWord))
 //        Log.d("ttt000", eventIdx.toString())
+
 
 
         // 답안 박스
@@ -116,7 +117,6 @@ class MainActivity : AppCompatActivity() {
          * */
         viewModel.keyboardText.observe(this, {
 
-//            if (viewModel.flag.value == false){
                 viewModel.keyboardText.value?.let { it ->
                     Log.d("Tttt", it.toString())
 
@@ -149,9 +149,10 @@ class MainActivity : AppCompatActivity() {
 
                         }
                     }
-//                }
             }
         })
+
+
 
         /**
          * 삭제를 누르면 수행되는 코드
@@ -160,22 +161,22 @@ class MainActivity : AppCompatActivity() {
          * */
 
         binding.deleteButton.setOnClickListener{
-//            if (viewModel.flag.value == false){
-                if(currentBox in 1..6){
-                    boxText[currentLine][currentBox-1].text = ""
-                    box[currentLine][currentBox-1].strokeColor = Color.parseColor("#e2e8f0")
-                    checkUnicode[currentBox-1] = ""
-                    currentBox--
-                }
+            if(currentBox in 1..6){
+                boxText[currentLine][currentBox-1].text = ""
+                box[currentLine][currentBox-1].strokeColor = Color.parseColor("#e2e8f0")
+                checkUnicode[currentBox-1] = ""
+                currentBox--
 
-                for (i in 0..5){
-                    boxText[currentLine][i].setTextColor(Color.BLACK)
+            }
 
-                }
+            for (i in 0..5){
+                boxText[currentLine][i].setTextColor(Color.BLACK)
 
-//            }
+            }
 
         }
+
+
 
 
         /**
@@ -198,6 +199,8 @@ class MainActivity : AppCompatActivity() {
 
                     // 반복문을 통해 정답 코드를 확인
                     for (i in currectText.indices){
+
+
 
                         // 정답 문자 리스트에 boxText[currentLine][i].text가 있다면
                         if (currectText.contains(checkUnicode[i])){
@@ -263,25 +266,32 @@ class MainActivity : AppCompatActivity() {
 
                         }
 
+                        Log.d("Ttt",box[currentLine][i].cardBackgroundColor.defaultColor.toString())
+                        Log.d("Ttt",box[currentLine][i].strokeColor.toString())
+                        Log.d("Ttt",boxText[currentLine][i].textColors.defaultColor.toString())
+                        Log.d("Ttt",boxText[currentLine][i].text.toString())
+
+
+
 
                     }
+
+
 
 
                     // 정답을 맞추었거나 기회를 놓쳤을 경우
                     if(answer == 6 || currentLine == 5){
                         var currentSolve : Boolean
                         var solveProblemsCnt : Int
-
                         if(answer == 6){
-                            Toast.makeText(this@MainActivity, "정답입니다!", Toast.LENGTH_SHORT).show()
                             solveProblemsCnt = 1
                             currentSolve = true
                         }else{
-                            Toast.makeText(this@MainActivity, "아쉽게도 정답을 맞추지 못했습니다.", Toast.LENGTH_SHORT).show()
                             solveProblemsCnt = 0
                             currentSolve = false
 
                         }
+
 
                         // 현재 날짜
                         val today = Calendar.getInstance().apply {
@@ -339,21 +349,21 @@ class MainActivity : AppCompatActivity() {
 
                                 }
 
+
+
                                 viewModel.updateRoom(KordleEntity(
                                     id = 0,
                                     lastDay = today,
                                     preSolve = currentSolve,
                                     allProblemsCnt = kordleModel.allProblemsCnt +1 ,
                                     solveProblemsCnt= kordleModel.solveProblemsCnt + solveProblemsCnt ,
-                                    correctAnswerRate = (((kordleModel.solveProblemsCnt + solveProblemsCnt) / (kordleModel.allProblemsCnt +1)) * 100).toDouble(),
+                                    correctAnswerRate = round((((kordleModel.solveProblemsCnt + solveProblemsCnt).toDouble() / (kordleModel.allProblemsCnt + 1)).toDouble() * 100.0).toDouble() * 10 / 10),
                                     currentWinningStreak = currentWinningStreak ,
                                     mostWinStreak = mostWinStreak,
                                     AnswerCnt = AnswerCnt(one, two, three, four, five, six)))
 
-                                Log.d("Ttt" , viewModel.roomKordle.value?.get(0)?.id.toString())
-
-
                             }
+
 
                         }
 
@@ -469,7 +479,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setObserver() {
         Log.d("Ttt1111", "11111")
-
         binding.keyboard0.visibility = View.GONE
         binding.keyboard1.visibility = View.GONE
         binding.keyboard2.visibility = View.GONE
@@ -480,6 +489,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("Ttt22222", it[0].toString())
 
             kordleModel = it[0]
+            binding.problemNum.text =  kordleModel.allProblemsCnt.toString()
             Log.d("Ttt22222", kordleModel.toString())
 
             lastDay = kordleModel.lastDay
@@ -572,7 +582,6 @@ class MainActivity : AppCompatActivity() {
             var answerWord = ""
             currectText.forEach { answerWord += convertUnicodeToString(it)+" " }
             binding.answerWord.text = "정답은 \"${answerWord}\"입니다."
-            Log.d("ttt", answerWord)
 
 
         })
@@ -617,7 +626,8 @@ class MainActivity : AppCompatActivity() {
         println("ttt목표일 까지 남은 일(D-DAY) : ${(endDate - today) / (24 * 60 * 60 * 1000)}")
     }
 
-    // kordle_unicode_words에서 모든 단어 가져오기/
+
+    // kordle_unicode_words에서 모든 단어 가져오기
     private fun readTextFile(): List<String> {
         val file = resources.openRawResource(R.raw.kordle_unicode_words)
         var txt = ByteArray(file.available())
@@ -637,7 +647,6 @@ class MainActivity : AppCompatActivity() {
     private fun getWord(word : List<String>, index : Int): ArrayList<String> {
         var temp = ""
         var tempText = arrayListOf<String>()
-
 //        var wordRandom = word.shuffled()[0] // 무작위로 하나의 단어를 가져오기.
         var wordRandom = word[index]
         wordRandom.forEach { it ->
@@ -684,9 +693,5 @@ class MainActivity : AppCompatActivity() {
 
         return text
     }
-
-
-
-
 
 }

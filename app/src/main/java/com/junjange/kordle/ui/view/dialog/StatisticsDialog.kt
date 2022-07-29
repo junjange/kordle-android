@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
 import com.junjange.kordle.data.AnswerCnt
 import com.junjange.kordle.databinding.ActivityStatisticsDialogBinding
@@ -52,8 +53,26 @@ class StatisticsDialog : AppCompatActivity() {
                 binding.AnswerCnt5.text = it[0].AnswerCnt.five.toString()
                 binding.AnswerCnt6.text = it[0].AnswerCnt.six.toString()
 
+                (binding.AnswerCnt1.layoutParams as LinearLayout.LayoutParams).weight = it[0].AnswerCnt.one.toFloat()
+                (binding.AnswerCnt1Empty.layoutParams as LinearLayout.LayoutParams).weight = (it[0].solveProblemsCnt - it[0].AnswerCnt.one).toFloat()
 
-//                binding.AnswerCnt1.setTextSize(0.1)
+                (binding.AnswerCnt2.layoutParams as LinearLayout.LayoutParams).weight = it[0].AnswerCnt.two.toFloat()
+                (binding.AnswerCnt2Empty.layoutParams as LinearLayout.LayoutParams).weight = (it[0].solveProblemsCnt - it[0].AnswerCnt.two).toFloat()
+
+                (binding.AnswerCnt3.layoutParams as LinearLayout.LayoutParams).weight = it[0].AnswerCnt.three.toFloat()
+                (binding.AnswerCnt3Empty.layoutParams as LinearLayout.LayoutParams).weight = (it[0].solveProblemsCnt - it[0].AnswerCnt.three).toFloat()
+
+                (binding.AnswerCnt4.layoutParams as LinearLayout.LayoutParams).weight = it[0].AnswerCnt.four.toFloat()
+                (binding.AnswerCnt4Empty.layoutParams as LinearLayout.LayoutParams).weight = (it[0].solveProblemsCnt - it[0].AnswerCnt.four).toFloat()
+
+                (binding.AnswerCnt5.layoutParams as LinearLayout.LayoutParams).weight = it[0].AnswerCnt.five.toFloat()
+                (binding.AnswerCnt5Empty.layoutParams as LinearLayout.LayoutParams).weight = (it[0].solveProblemsCnt - it[0].AnswerCnt.five).toFloat()
+
+                (binding.AnswerCnt6.layoutParams as LinearLayout.LayoutParams).weight = it[0].AnswerCnt.six.toFloat()
+                (binding.AnswerCnt6Empty.layoutParams as LinearLayout.LayoutParams).weight = (it[0].solveProblemsCnt - it[0].AnswerCnt.six).toFloat()
+
+
+
 
 
             })

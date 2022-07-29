@@ -48,10 +48,3 @@ abstract class KordleDatabase : RoomDatabase(){
 
 }
 
-//var currentProblems: Boolean,
-//var allProblemsCnt: Int,
-//var correctAnswerRate: Double,
-//var currentWinningStreak: Int,
-//var mostWinStreak: Int,
-//@Embedded
-//var AnswerCnt: AnswerCnt
