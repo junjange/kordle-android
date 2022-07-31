@@ -15,7 +15,7 @@
     <color name="question">#4338ca</color>
     <color name="wrong_answer_txt">#f87171</color>
 
-
+    <color name="light_yellow">#00000000</color>
 
     <!-- 선택되지 않은 점(선택 되지 않은 페이지 점) -->
     <color name="dot_dark_screen0">#e2e8f0</color>

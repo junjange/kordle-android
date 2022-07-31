@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="코들"
+            android:text="한글 워들"
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:textSize="24dp"
@@ -63,14 +63,14 @@
                 />
 
             <LinearLayout
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/problemNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1"
+                    android:text=""
                     android:textColor="@color/black"
                     android:layout_gravity="center"
                     android:textSize="20sp"

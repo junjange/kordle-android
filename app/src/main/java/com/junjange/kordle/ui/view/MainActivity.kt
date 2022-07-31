@@ -1,4 +1,5 @@
 package com.junjange.kordle.ui.view
+import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,33 +43,18 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
 
+        CoroutineScope(Dispatchers.Main).launch {
+            // 결과 값이 필요없는 작업
+            kordelWords =  readTextFile() // 모든 코들 단어
+            
+
+        }
+
         setObserver()
         setSupportActionBar(binding.mainToolbar) // 툴바를 액티비티의 앱바로 지정
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // 드로어를 꺼낼 홈 버튼 활성화
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_settings_24) // 홈버튼 이미지 변경
         supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바에 타이틀 안보이게
-        eventDate()
-//        var eventIdx =  eventDate() // 현재 단어 idx
-//        var kordelWords =  readTextFile() // 모든 코들 단어
-//        var currectText = getWord(kordelWords, eventIdx) // 무작위로 코들 단어 하나 가져오기
-        Log.d("ttt0", eventIdx.toString())
-
-
-//        Log.d("ttt가져온 유니코드 확인", kordelWords.toString())
-//        Log.d("ttt가져온 유니코드 개수", kordelWords.size.toString())
-//        Log.d("ttt정답 유니코드 확인", currectText.toString())
-//        Log.d("정답 유니코드 문자열", currectText.joinToString(""))
-
-
-
-
-//        currectText.forEach { answerWord += convertUnicodeToString(it)+" " }
-//        binding.answerWord.text = "정답은 \"${answerWord}\"입니다."
-
-//        Log.d("Ttt3", stringToConvertUnicode(answerWord))
-//        Log.d("ttt000", eventIdx.toString())
-
-
 
         // 답안 박스
         val box = arrayOf(arrayOf(binding.box0,  binding.box1,  binding.box2,  binding.box3,  binding.box4,  binding.box5),
@@ -294,12 +280,7 @@ class MainActivity : AppCompatActivity() {
 
 
                         // 현재 날짜
-                        val today = Calendar.getInstance().apply {
-                            set(Calendar.HOUR_OF_DAY, 0)
-                            set(Calendar.MINUTE, 0)
-                            set(Calendar.SECOND, 0)
-                            set(Calendar.MILLISECOND, 0)
-                        }.time.time
+                        val today = eventTime()
 
                         if ((today - lastDay) / (24 * 60 * 60 * 1000) > 0){
 
@@ -430,7 +411,11 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        // 다시 풀기
         binding.unravelAgainBtn.setOnClickListener {
+
+
+
 
             // 남은 시간 타이머 끄기
             timerTask?.cancel()
@@ -489,25 +474,20 @@ class MainActivity : AppCompatActivity() {
             Log.d("Ttt22222", it[0].toString())
 
             kordleModel = it[0]
-            binding.problemNum.text =  kordleModel.allProblemsCnt.toString()
             Log.d("Ttt22222", kordleModel.toString())
 
             lastDay = kordleModel.lastDay
 
 
-            val today = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.time.time
-
+            val today = eventTime()
             Log.d("ttt", ((today - lastDay) / (24 * 60 * 60 * 1000)).toString())
 
 
 
             if (today == lastDay){
                 eventIdx = kordleModel.allProblemsCnt
+                binding.problemNum.text = eventIdx.toString()
+                Log.d("ttt1", eventIdx.toString())
 
                 // 다음 문제까지 남은 시간 타이머로 보여줌
                 timerTask = kotlin.concurrent.timer(period = 1000) {    // timer() 호출
@@ -530,11 +510,13 @@ class MainActivity : AppCompatActivity() {
                 binding.keyboard2.visibility = View.GONE
                 binding.endGame.visibility = View.VISIBLE
 
-                // 마지막으로 문제를 푼 날에서 시간이 흘렀다면
-            } else if((today - lastDay) / (24 * 60 * 60 * 1000) > 0){
+            // 마지막으로 문제를 푼 날에서 시간이 흘렀다면
+            } else {
 
                 eventIdx = kordleModel.allProblemsCnt + 1
-                Log.d("ttt1", eventIdx.toString())
+                binding.problemNum.text = eventIdx.toString()
+
+                Log.d("ttt2", eventIdx.toString())
 
                 // 남은 시간 타이머 끄기
                 timerTask?.cancel()
@@ -547,37 +529,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-            }else{
-                eventIdx = kordleModel.allProblemsCnt - 1
-                Log.d("ttt2", eventIdx.toString())
-
-                // 다음 문제까지 남은 시간 타이머로 보여줌
-                timerTask = kotlin.concurrent.timer(period = 1000) {    // timer() 호출
-
-
-                    // UI조작을 위한 메서드
-                    runOnUiThread {
-                        // 남은 시간
-                        val currentTimeMillis = System.currentTimeMillis()
-                        val mFormat = SimpleDateFormat("HH:mm:ss")
-                        var timeRemaining = mFormat.format(Date( mFormat.parse("-09:00:00").time - currentTimeMillis))
-                        binding.nextTime.text = timeRemaining
-
-
-                    }
-                }
-
-                binding.keyboard0.visibility = View.GONE
-                binding.keyboard1.visibility = View.GONE
-                binding.keyboard2.visibility = View.GONE
-                binding.endGame.visibility = View.VISIBLE
-
-
-
             }
 
-            kordelWords =  readTextFile() // 모든 코들 단어
-            currectText = getWord(kordelWords, eventIdx) // 무작위로 코들 단어 하나 가져오기
+            currectText = getWord(kordelWords, eventIdx) // 코들 단어 하나 가져오기
 
             var answerWord = ""
             currectText.forEach { answerWord += convertUnicodeToString(it)+" " }
@@ -608,12 +562,7 @@ class MainActivity : AppCompatActivity() {
 
         val startDate = dateFormat.parse("2022-07-24 09:00:00").time
         val endDate = dateFormat.parse("2022-07-25 00:00:00").time
-        val today = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.time.time
+        val today = eventTime()
 
         println("ttt 현재 : ${(today) / (24 * 60 * 60 * 1000)}")
         println("ttt 현재123 : ${(today)}")
@@ -624,6 +573,16 @@ class MainActivity : AppCompatActivity() {
         println("ttt두 날짜간의 차이(일) : ${(endDate - startDate) / (24 * 60 * 60 * 1000)}")
         println("ttt시작일 부터 경과 일 : ${(1658674800000 - 1658588400000) / (24 * 60 * 60 * 1000)}")
         println("ttt목표일 까지 남은 일(D-DAY) : ${(endDate - today) / (24 * 60 * 60 * 1000)}")
+    }
+
+    private fun eventTime(): Long {
+        return Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.time.time
+
     }
 
 
@@ -692,6 +651,31 @@ class MainActivity : AppCompatActivity() {
         }
 
         return text
+    }
+
+
+
+    // 뒤로가기 2번 눌러야 종료
+    private val FINISH_INTERVAL_TIME: Long = 2500
+    private var backPressedTime: Long = 0
+    private var toast: Toast? = null
+    override fun onBackPressed() {
+        val tempTime = System.currentTimeMillis()
+        val intervalTime = tempTime - backPressedTime
+
+
+        // 뒤로 가기 할 경우 홈 화면으로 이동
+        if (intervalTime in 0..FINISH_INTERVAL_TIME) {
+            super.onBackPressed()
+            // 앱 종료시 뒤로가기 토스트 종료
+            toast!!.cancel()
+            finish()
+        } else {
+            backPressedTime = tempTime
+            toast =
+                Toast.makeText(applicationContext, "'뒤로'버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT)
+            toast!!.show()
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.junjange.kordle.ui.view.dialog
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -43,7 +44,13 @@ class SetDialog : AppCompatActivity() {
 
         }
 
-        // 평가 하기기
+        // 공유 하기
+        binding.share.setOnClickListener {
+            val message = "한글은 위대하다!\n한글 워들 함께 해요~ ${String(Character.toChars(0x1F917))}\n\n(구글 스토어 주소)"
+            share(message)
+        }
+
+        // 평가 하기
         binding.evaluation.setOnClickListener {
             Toast.makeText(this, "서비스 준비중입니다.", Toast.LENGTH_SHORT).show()
 
@@ -51,5 +58,20 @@ class SetDialog : AppCompatActivity() {
         }
 
 
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    fun share(content: String) {
+        val intent = Intent(Intent.ACTION_SEND) // 공유하는 인텐트 생성
+            .apply {
+                type = "text/plain" // 데이터 타입 설정
+                putExtra(Intent.EXTRA_TEXT, content) // 보낼 내용 설정
+            }
+
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(Intent.createChooser(intent, "초대 메세지 보내기"))
+        } else {
+            Toast.makeText(this, "초대 메세지를 전송할 수 없습니다", Toast.LENGTH_LONG).show()
+        }
     }
 }
