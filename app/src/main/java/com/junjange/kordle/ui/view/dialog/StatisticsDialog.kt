@@ -41,7 +41,7 @@ class StatisticsDialog : AppCompatActivity() {
 
     private fun setObserver() {
             viewModel.roomKordle.observe(this@StatisticsDialog, {
-                Log.d("ttt", it.toString())
+//                Log.d("ttt", it.toString())
                 binding.allProblemsCnt.text = it[0].allProblemsCnt.toString()
                 binding.correctAnswerRate.text = it[0].correctAnswerRate.toString() + "%"
                 binding.currentWinningStreak.text = it[0].currentWinningStreak.toString()
@@ -70,9 +70,6 @@ class StatisticsDialog : AppCompatActivity() {
 
                 (binding.AnswerCnt6.layoutParams as LinearLayout.LayoutParams).weight = it[0].AnswerCnt.six.toFloat()
                 (binding.AnswerCnt6Empty.layoutParams as LinearLayout.LayoutParams).weight = (it[0].solveProblemsCnt - it[0].AnswerCnt.six).toFloat()
-
-
-
 
 
             })

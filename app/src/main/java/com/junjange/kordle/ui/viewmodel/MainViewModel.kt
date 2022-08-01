@@ -26,8 +26,6 @@ class MainViewModel(private val repository: KordleRepository) : ViewModel() {
     }
 
 
-
-
     private val keyboardToText = hashMapOf(
         "q_button" to "ㅂ", "w_button" to "ㅈ", "e_button" to "ㄷ", "r_button" to "ㄱ", "t_button" to "ㅅ", "y_button" to "ㅛ", "u_button" to "ㅕ", "i_button" to "ㅑ",
         "a_button" to "ㅁ", "s_button" to "ㄴ", "d_button" to "ㅇ", "f_button" to "ㄹ", "g_button" to "ㅎ", "h_button" to "ㅗ", "j_button" to "ㅓ", "k_button" to "ㅏ", "l_button" to "ㅣ",

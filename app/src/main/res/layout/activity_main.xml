@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="한글 워들"
+            android:text="훈들"
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:textSize="24dp"

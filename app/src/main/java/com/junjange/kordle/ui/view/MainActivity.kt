@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var currectText : ArrayList<String>
     lateinit var kordleModel : KordleEntity
 
+    var activity: SplashActivity? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -44,13 +45,11 @@ class MainActivity : AppCompatActivity() {
 
 
         CoroutineScope(Dispatchers.Main).launch {
-            // 결과 값이 필요없는 작업
-            kordelWords =  readTextFile() // 모든 코들 단어
-            
-
+            setObserver()
         }
 
-        setObserver()
+        kordelWords =  readTextFile() // 모든 코들 단어
+
         setSupportActionBar(binding.mainToolbar) // 툴바를 액티비티의 앱바로 지정
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // 드로어를 꺼낼 홈 버튼 활성화
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_settings_24) // 홈버튼 이미지 변경
@@ -104,7 +103,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.keyboardText.observe(this, {
 
                 viewModel.keyboardText.value?.let { it ->
-                    Log.d("Tttt", it.toString())
 
                     if(!solveLine[currentLine] && currentBox < 6){
                         checkUnicode[currentBox] = stringToConvertUnicode(it)
@@ -251,13 +249,6 @@ class MainActivity : AppCompatActivity() {
                             keyboardText[boxText[currentLine][i].text]?.setTextColor(Color.WHITE)
 
                         }
-
-                        Log.d("Ttt",box[currentLine][i].cardBackgroundColor.defaultColor.toString())
-                        Log.d("Ttt",box[currentLine][i].strokeColor.toString())
-                        Log.d("Ttt",boxText[currentLine][i].textColors.defaultColor.toString())
-                        Log.d("Ttt",boxText[currentLine][i].text.toString())
-
-
 
 
                     }
@@ -463,7 +454,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setObserver() {
-        Log.d("Ttt1111", "11111")
         binding.keyboard0.visibility = View.GONE
         binding.keyboard1.visibility = View.GONE
         binding.keyboard2.visibility = View.GONE
@@ -471,23 +461,14 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel.roomKordle.observe(this@MainActivity, {
-            Log.d("Ttt22222", it[0].toString())
-
             kordleModel = it[0]
-            Log.d("Ttt22222", kordleModel.toString())
-
             lastDay = kordleModel.lastDay
 
-
             val today = eventTime()
-            Log.d("ttt", ((today - lastDay) / (24 * 60 * 60 * 1000)).toString())
-
-
 
             if (today == lastDay){
                 eventIdx = kordleModel.allProblemsCnt
                 binding.problemNum.text = eventIdx.toString()
-                Log.d("ttt1", eventIdx.toString())
 
                 // 다음 문제까지 남은 시간 타이머로 보여줌
                 timerTask = kotlin.concurrent.timer(period = 1000) {    // timer() 호출
@@ -516,7 +497,6 @@ class MainActivity : AppCompatActivity() {
                 eventIdx = kordleModel.allProblemsCnt + 1
                 binding.problemNum.text = eventIdx.toString()
 
-                Log.d("ttt2", eventIdx.toString())
 
                 // 남은 시간 타이머 끄기
                 timerTask?.cancel()
@@ -564,15 +544,15 @@ class MainActivity : AppCompatActivity() {
         val endDate = dateFormat.parse("2022-07-25 00:00:00").time
         val today = eventTime()
 
-        println("ttt 현재 : ${(today) / (24 * 60 * 60 * 1000)}")
-        println("ttt 현재123 : ${(today)}")
-        println("ttt 현재123 : ${(endDate)}")
-
-
-
-        println("ttt두 날짜간의 차이(일) : ${(endDate - startDate) / (24 * 60 * 60 * 1000)}")
-        println("ttt시작일 부터 경과 일 : ${(1658674800000 - 1658588400000) / (24 * 60 * 60 * 1000)}")
-        println("ttt목표일 까지 남은 일(D-DAY) : ${(endDate - today) / (24 * 60 * 60 * 1000)}")
+//        println("ttt 현재 : ${(today) / (24 * 60 * 60 * 1000)}")
+//        println("ttt 현재123 : ${(today)}")
+//        println("ttt 현재123 : ${(endDate)}")
+//
+//
+//
+//        println("ttt두 날짜간의 차이(일) : ${(endDate - startDate) / (24 * 60 * 60 * 1000)}")
+//        println("ttt시작일 부터 경과 일 : ${(1658674800000 - 1658588400000) / (24 * 60 * 60 * 1000)}")
+//        println("ttt목표일 까지 남은 일(D-DAY) : ${(endDate - today) / (24 * 60 * 60 * 1000)}")
     }
 
     private fun eventTime(): Long {
@@ -593,7 +573,6 @@ class MainActivity : AppCompatActivity() {
         file.read(txt)
         file.close()
         var words = txt.toString(Charsets.UTF_8)
-        Toast.makeText(this, txt.toString(Charsets.UTF_8),Toast.LENGTH_SHORT).show()
         words = words.replace("\"", "")
 
         var word= words.split(",")

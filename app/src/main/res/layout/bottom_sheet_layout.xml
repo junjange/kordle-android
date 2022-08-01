@@ -28,8 +28,13 @@
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이 놀이는 Belorin&amp;Silas가 한국어로 만든 오픈 소스 복제판입니다. Hannah Park의 원본 코드를 확인하거나 Aidan Pine의 포크를 사용해서 다른 언어로도 조율해보세요! "/>
+            android:text="이 놀이는 Wordle의 한국어 버전입니다. JunJangE의 원본 코드를 확인하거나 github.com/junjange/Kordle-Android 포크를 사용해서 다른 언어로도 조율해보세요! ''훈들''의 어휘들은 국립국어원, KLUE vocab,NIADic에서 가져왔습니다."/>
 
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="한글은 여전히 위대합니다."/>
 
 
     </LinearLayout>

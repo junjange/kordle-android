@@ -46,7 +46,7 @@ class SetDialog : AppCompatActivity() {
 
         // 공유 하기
         binding.share.setOnClickListener {
-            val message = "한글은 위대하다!\n한글 워들 함께 해요~ ${String(Character.toChars(0x1F917))}\n\n(구글 스토어 주소)"
+            val message = "한글은 위대하다!\n친구들에게 훈들을 공유해요~ ${String(Character.toChars(0x1F917))}\n\n(구글 스토어 주소)"
             share(message)
         }
 

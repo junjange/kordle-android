@@ -13,14 +13,6 @@ class StatisticsViewModel(private val repository: KordleRepository) : ViewModel(
     val roomKordle: LiveData<List<KordleEntity>> = repository.roomGetAllKordle()
 
 
-
-
-    // 코루틴으로 Room 제어
-    fun updateRoom(kordleEntity: KordleEntity) = viewModelScope.launch(Dispatchers.IO) {
-        repository.roomUpdateKordle(kordleEntity)
-    }
-
-
     class Factory(private val application : Application) : ViewModelProvider.Factory { // factory pattern
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return StatisticsViewModel(KordleRepository.getInstance(application)!!) as T
