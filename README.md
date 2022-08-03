@@ -7,6 +7,7 @@
 
 
 ## 🌈 Google Play
+https://play.google.com/store/apps/details?id=com.junjange.kordle
 
 ## 📖 Details of the app screens
 
