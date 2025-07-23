@@ -19,7 +19,7 @@ interface KordleDao {
 
     // 데이터 업데이트
     @Update
-    suspend fun update(kordleEntity: KordleEntity?)
+    suspend fun update(kordleEntity: KordleEntity)
 
     // 데이터 삭제
     @Delete
