@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var currectText : ArrayList<String>
     lateinit var kordleModel : KordleEntity
 
-    var activity: SplashActivity? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

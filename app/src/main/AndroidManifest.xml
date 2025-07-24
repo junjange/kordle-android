@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kordle">
         <activity
-            android:name=".ui.view.MainActivity"
-            android:exported="true"/>
-        <activity
             android:name=".ui.view.dialog.StatisticsDialog"
             android:exported="false"
             android:theme="@style/Theme.MyDialog" />
@@ -26,9 +23,8 @@
             android:theme="@style/Theme.MyDialog" />
         <activity
 
-            android:name=".ui.view.SplashActivity"
-            android:exported="true"
-           >
+            android:name=".ui.view.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
